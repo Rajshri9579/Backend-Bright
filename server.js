@@ -1,13 +1,20 @@
 import {createServer} from 'node:http'
-import fs from 'node:fs/promises'
+import fs from 'node:fs'
 
-const server = createServer(async (req, res)=>{
+const server = createServer( (req, res)=>{
     //ROuting....
     // console.log('req', req);
 
     if(req.url === '/'){
         res.writeHead(200, {'content--type': 'text/html'})
-        const data = await fs.readFile('./index.html')
+        // const data = await fs.readFile('./index.html')
+
+        const dataStraem = fs.createReadStream('./index.html')
+
+        dataStraem.on('data', (chunk)=>{
+            res.write()
+        })
+
         res.end(data)
     }else if(req.url === '/about'){
         res.end('<h1>This is your about page<h1>')
